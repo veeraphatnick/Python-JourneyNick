@@ -7,7 +7,7 @@ count = 1
 size = 40
 for img in path:
     image = cv2.imread(img)
-
+    
     h, w = image.shape[:2]
     hh = int(h/2)
     ww = int(w/2)
