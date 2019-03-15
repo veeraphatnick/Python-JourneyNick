@@ -15,19 +15,30 @@ def authenticate_twitter_app():
 
 def get_user_timeline_tweets(num_tweets,screen_name,fetched_tweets_filename):
     tweets = ''
-    count = 0
+    reply_count, retweeted_count, original_tweets_count = 0,0,0
     for tweet in tweepy.Cursor(authenticate_twitter_app().user_timeline, id=screen_name).items(num_tweets):
         #tweets.append(tweet)
         tweets = json.dumps(tweet._json, indent=5)
-        print(tweets)
-        with open(fetched_tweets_filename, 'a') as tf:
-            tf.write(tweets)
-        count += 1
-    print(count)
+        if(tweet.in_reply_to_status_id != None):
+            #print("Reply to Status :",tweet.in_reply_to_status_id)
+            reply_count += 1
+        elif(tweet.text.startswith("RT @") == True):
+            #print("Retweeted Status :",tweet.id)
+            retweeted_count += 1
+        else:
+            print("Original Tweets :",tweet.id)
+            original_tweets_count += 1
+        #with open(fetched_tweets_filename, 'a') as tf:
+        #    tf.write(tweets)
+    print(reply_count)
+    print(retweeted_count)
+    print(original_tweets_count)
     return tweets    
 
 if __name__=="__main__":
     screen_name = 'VeeraphatN'
     fetched_tweets_filename = "tweets.txt"
+    fetched_tweets_filename = "retweets.txt"
+    fetched_tweets_filename = "reply.txt"
     data_tweet = get_user_timeline_tweets(20,screen_name,fetched_tweets_filename)
     data = json.loads(data_tweet)

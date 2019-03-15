@@ -1,7 +1,7 @@
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-
+import json
 class TwitterStreamer():
     """
     Class for streaming and processing live tweets.
@@ -36,6 +36,8 @@ class StdOutListener(StreamListener):
 
     def on_data(self, data):
         try:
+            data = json.loads(data)
+            data = json.dumps(data, indent=5)
             print(data)
             with open(self.fetched_tweets_filename, 'a') as tf:
                 tf.write(data)
@@ -50,8 +52,8 @@ class StdOutListener(StreamListener):
 if __name__ == '__main__':
  
     # Authenticate using config.py and connect to Twitter Streaming API.
-    hash_tag_list = ["donal trump", "hillary clinton", "barack obama", "bernie sanders"]
-    fetched_tweets_filename = "tweets.txt"
+    hash_tag_list = ["@NASA"]
+    fetched_tweets_filename = "test.txt"
 
     twitter_streamer = TwitterStreamer()
     twitter_streamer.stream_tweets(fetched_tweets_filename, hash_tag_list)
