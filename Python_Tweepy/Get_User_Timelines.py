@@ -31,6 +31,7 @@ def get_user_timeline_tweets(num_tweets,screen_name,fetched_tweets_filename):
             original_tweets_count += 1
         count += 1
         print(count)
+        print(tweets)
         #with open(fetched_tweets_filename, 'a') as tf:
         #    tf.write(tweets)
     print(reply_count)
@@ -41,5 +42,5 @@ def get_user_timeline_tweets(num_tweets,screen_name,fetched_tweets_filename):
 if __name__=="__main__":
     screen_name = 'EmmaWatson'
     fetched_tweets_filename = 'tweets.txt'
-    data_tweet = get_user_timeline_tweets(1700,screen_name,fetched_tweets_filename)
+    data_tweet = get_user_timeline_tweets(1,screen_name,fetched_tweets_filename)
     data = json.loads(data_tweet)
