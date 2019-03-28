@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Tutorial
+from main.models import Tutorial
 
 # Create your views here.
 def homepage(request):
