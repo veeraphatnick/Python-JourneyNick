@@ -2,15 +2,43 @@
     {% load static %}
     <!-- Prism CSS -->
     <link href="{% static "tinymce/css/prism.css" %}" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
-<body>
-    {% for tut in tutorials %}
-        <p>{{tut.tutorial_title}}</p>
-        <p>{{tut.tutorial_published}}</p>
-        <p>{{tut.tutorial_content|safe}}</p>
-        <br><br>
-    {% endfor %}
 
-    <!-- Prism JS -->
-    <script src="{% static "tinymce/js/prism.js" %}"></script>
+<body>
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">Tutorials</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="row">
+        {% for tut in tutorials %}
+            <div class="col s12 m6">
+              <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">{{tut.tutorial_title}}</span>
+                  <p>{{tut.tutorial_published}}</p>
+                  <p>{{tut.tutorial_content|safe}}</p>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+
+  {% block content %}
+  {% endblock %}
+
 </body>
+
+<!-- Prism JS -->
+<script src="{% static "tinymce/js/prism.js" %}"></script>
