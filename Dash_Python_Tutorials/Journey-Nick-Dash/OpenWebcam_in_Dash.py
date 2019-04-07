@@ -13,11 +13,7 @@ import datetime
 import time
 import math
 
-X = deque(maxlen=100)
-X.append(1)
-Y = deque(maxlen=100)
-Y.append(1)
-
+import detection
 class VideoCamera(object):
 
     def __init__(self):
@@ -28,15 +24,25 @@ class VideoCamera(object):
 
     def get_frame(self):
         success, image = self.video.read()
+        image, threshold = detection.detection(success,image)
         ret, jpeg = cv2.imencode('.jpg',image)
         return jpeg.tobytes()
 
+    def get_frame_threshold(self):
+        success, image = self.video.read()
+        image, threshold = detection.detection(success,image)
+        ret, jpeg = cv2.imencode('.jpg',threshold)
+        return jpeg.tobytes()
+
 def gen(camera):
+    
     while True:
         frame = camera.get_frame()
+        frame_threshold = camera.get_frame_threshold()
+        
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
+        
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
 
@@ -49,6 +55,3 @@ app.layout = html.Div([
     html.H1("Webcam Test"),
     html.Img(src="/video_feed"),
 ])
-
-if __name__ == '__main__':
-    app.run_server(debug=True)
