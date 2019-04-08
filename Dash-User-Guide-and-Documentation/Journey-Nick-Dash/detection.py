@@ -30,8 +30,6 @@ def circle_floc(roi, cnt, count):
 def nothing(x):
     pass
 
-
-
 def detection(ret,frame):
     count = 0
     data = []

@@ -1,0 +1,8 @@
+{
+    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe",
+    "python.linting.enabled": true,
+    "python.linting.pylintArgs": [
+        "--extension-pkg-whitelist=cv2",
+    ],
+    "python.linting.pylintEnabled": true,
+}
